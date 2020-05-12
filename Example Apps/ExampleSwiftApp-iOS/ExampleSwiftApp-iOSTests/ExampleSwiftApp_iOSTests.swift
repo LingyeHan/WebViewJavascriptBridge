@@ -22,11 +22,7 @@ class ExampleSwiftApp_iOSTests: XCTestCase {
         super.setUp()
         
         let rootVC = (UIApplication.shared.delegate as! AppDelegate).window!.rootViewController!
-        var frame = rootVC.view.bounds
-        frame.size.height /= 2
-        
-        frame.origin.y += frame.size.height
-        wkWebView = WKWebView.init(frame: frame)
+        wkWebView = WKWebView.init(frame: rootVC.view.bounds)
         wkWebView.backgroundColor = UIColor.red
         rootVC.view.addSubview(wkWebView)
     }
@@ -37,7 +33,7 @@ class ExampleSwiftApp_iOSTests: XCTestCase {
     }
     
     func bridgeForWebView(_ webView: Any) -> WebViewJavascriptBridge {
-        let bridge = WebViewJavascriptBridge.init(webView)!
+        let bridge = WebViewJavascriptBridge(for: (webView as! WKWebView))!
         bridgeRefs.add(bridge)
         return bridge
     }
